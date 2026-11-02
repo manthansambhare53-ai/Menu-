@@ -1,0 +1,539 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Royal Taste</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: full-bleed gold-on-black hero, sticky category tabs, card grid, right-hand cart drawer with a two-step WhatsApp checkout. */
+:root{
+  --ink:#0d0b09;
+  --ink-2:#171310;
+  --ink-3:#211b15;
+  --cream:#f3ead7;
+  --cream-dim:#b9ad94;
+  --gold:#d4a84b;
+  --gold-hi:#f0cf80;
+  --gold-deep:#8a6a25;
+  --line:rgba(212,168,75,.24);
+  --veg:#46b058;
+  --nonveg:#d2503f;
+  --danger:#e07a6a;
+  --font-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --font-body:"Jost",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);color:var(--cream);
+  font-family:var(--font-body);font-size:16px;line-height:1.5;
+  padding-inline:0;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+.wrap{width:100%;max-width:1080px;margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;margin:0;text-wrap:balance}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--ink-2);border-bottom:1px solid var(--line)}
+.hero-art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,9,.35),rgba(13,11,9,.86) 78%,var(--ink))}
+.hero-in{position:relative;z-index:1;padding-block:44px 28px;display:grid;gap:20px;justify-items:start}
+.brand{display:flex;align-items:center;gap:16px;min-width:0}
+.logo{width:76px;height:76px;flex:none;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.eyebrow{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.hero h1{font-size:clamp(2.4rem,9vw,4rem);line-height:.98;color:var(--cream);letter-spacing:.01em}
+.tag{font-family:var(--font-display);font-style:italic;font-size:clamp(1.15rem,4vw,1.5rem);color:var(--gold-hi);margin:6px 0 0}
+.info{display:flex;flex-wrap:wrap;gap:10px}
+.chip-info{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(13,11,9,.6);font-size:.88rem;color:var(--cream);min-width:0}
+.chip-info svg{width:16px;height:16px;flex:none;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* category tabs */
+.tabs-bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(13,11,9,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:10px;overflow-x:auto;padding-block:12px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:10px 20px;border-radius:999px;border:1px solid var(--line);color:var(--cream-dim);font-weight:500;font-size:.95rem;letter-spacing:.02em;transition:background .2s,color .2s,border-color .2s}
+.tab small{margin-left:6px;opacity:.7;font-size:.78rem}
+.tab:hover{border-color:var(--gold);color:var(--cream)}
+.tab[aria-selected="true"]{background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1306;border-color:transparent;font-weight:600}
+
+/* menu */
+main{padding-block:28px 140px}
+.cat-head{display:grid;gap:4px;margin-bottom:20px}
+.cat-head h2{font-size:clamp(1.9rem,6vw,2.6rem);color:var(--cream)}
+.cat-head p{margin:0;color:var(--cream-dim);font-size:.95rem}
+.rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:10px;width:120px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:18px}
+.card{display:flex;flex-direction:column;min-width:0;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-3px);border-color:rgba(212,168,75,.55)}
+.pic{position:relative;aspect-ratio:4/3;max-width:100%;overflow:hidden;background:var(--ink-3)}
+.pic svg,.pic img{width:100%;height:100%;display:block;object-fit:cover}
+.vmark{position:absolute;top:10px;left:10px;width:22px;height:22px;border-radius:4px;background:var(--cream);border:2px solid var(--veg);display:grid;place-items:center}
+.vmark::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--veg)}
+.vmark.nv{border-color:var(--nonveg)}
+.vmark.nv::after{background:var(--nonveg);border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.body{display:flex;flex-direction:column;gap:6px;padding:14px 16px 16px;flex:1}
+.body h3{font-size:1.45rem;line-height:1.15;color:var(--cream)}
+.desc{margin:0;color:var(--cream-dim);font-size:.9rem;flex:1}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.price{font-family:var(--font-display);font-weight:700;font-size:1.55rem;color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.btn-add{padding:10px 18px;border-radius:999px;border:1px solid var(--gold);color:var(--gold-hi);font-weight:600;font-size:.9rem;letter-spacing:.03em;transition:background .2s,color .2s}
+.btn-add:hover{background:var(--gold);color:#1a1306}
+.step{display:inline-flex;align-items:center;border:1px solid var(--gold);border-radius:999px;overflow:hidden}
+.step button{width:38px;height:38px;font-size:1.2rem;color:var(--gold-hi);line-height:1}
+.step button:hover{background:rgba(212,168,75,.18)}
+.step output{min-width:30px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+
+footer{border-top:1px solid var(--line);padding-block:26px 150px;color:var(--cream-dim);font-size:.85rem}
+footer p{margin:0 0 6px}
+
+/* cart bar */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(180deg,transparent,rgba(13,11,9,.96) 40%)}
+.bar-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;max-width:640px;margin-inline:auto;padding:14px 20px;border-radius:14px;background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1306;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.bar-btn span:last-child{font-family:var(--font-display);font-size:1.4rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* drawer */
+.scrim{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.66)}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:80;width:min(440px,100%);background:var(--ink-2);border-left:1px solid var(--line);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.d-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px max(16px,env(safe-area-inset-right,0px)) 12px 16px;border-bottom:1px solid var(--line)}
+.d-head h2{font-size:1.8rem}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--cream);flex:none}
+.icon-btn:hover{border-color:var(--gold)}
+.icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.d-body{flex:1;overflow-y:auto;padding:8px max(16px,env(safe-area-inset-right,0px)) 16px 16px}
+.d-foot{border-top:1px solid var(--line);padding:14px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) 16px;display:grid;gap:12px;background:var(--ink)}
+.line{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid rgba(212,168,75,.12)}
+.line .nm{font-weight:500;min-width:0;overflow-wrap:anywhere}
+.line .each{color:var(--cream-dim);font-size:.82rem}
+.line .sub{font-family:var(--font-display);font-weight:700;font-size:1.25rem;color:var(--gold-hi);text-align:right;font-variant-numeric:tabular-nums}
+.line .ctl{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between}
+.rm{color:var(--danger);font-size:.84rem;padding:6px 2px;text-decoration:underline;text-underline-offset:3px}
+.empty{text-align:center;color:var(--cream-dim);padding:56px 12px}
+.empty b{display:block;font-family:var(--font-display);font-size:1.6rem;color:var(--cream);font-weight:600;margin-bottom:6px}
+.total{display:flex;justify-content:space-between;align-items:baseline}
+.total span:first-child{color:var(--cream-dim);letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
+.total span:last-child{font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 20px;border-radius:14px;background:#25d366;color:#06240f;font-weight:600;font-size:1.02rem;text-decoration:none;box-shadow:0 8px 24px rgba(37,211,102,.22)}
+.btn-wa:hover{background:#3be07a}
+.btn-wa svg{width:22px;height:22px;fill:currentColor}
+.btn-ghost{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);color:var(--cream);font-weight:500}
+.btn-ghost:hover{border-color:var(--gold)}
+.clear{color:var(--cream-dim);font-size:.85rem;text-decoration:underline;text-underline-offset:3px;justify-self:center}
+
+/* checkout form */
+.field{display:grid;gap:6px;margin-top:16px}
+.field label,.field .lbl{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.field input[type=text]{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--line);background:var(--ink);color:var(--cream);font:inherit}
+.field input::placeholder{color:#7d735f}
+.field input:focus-visible{border-color:var(--gold);outline-offset:0}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{padding:12px;border-radius:10px;border:1px solid var(--line);color:var(--cream-dim);font-weight:500}
+.seg button[aria-pressed="true"]{background:rgba(212,168,75,.16);border-color:var(--gold);color:var(--gold-hi)}
+.err{color:var(--danger);font-size:.84rem;min-height:1.1em;margin:0}
+.sum{margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:6px 14px;background:var(--ink)}
+.sum .r{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(212,168,75,.12);font-size:.94rem}
+.sum .r span:last-child{font-variant-numeric:tabular-nums;color:var(--gold-hi);white-space:nowrap}
+.sum .r:last-child{border-bottom:0;font-weight:600}
+.prev{margin:10px 0 0;padding:12px;border-radius:10px;background:var(--ink);border:1px dashed var(--line);color:var(--cream-dim);font:inherit;font-size:.82rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.note{font-size:.8rem;color:var(--cream-dim);margin:0}
+.warn{margin-top:14px;padding:10px 12px;border-radius:10px;border:1px solid rgba(224,122,106,.5);color:var(--danger);font-size:.82rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:520px){.logo{width:62px;height:62px}.hero-in{padding-block:34px 22px}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="gPlate" cx="50%" cy="40%" r="65%"><stop offset="0" stop-color="#fbf4e3"/><stop offset="1" stop-color="#d9ccb0"/></radialGradient>
+    <radialGradient id="gWell" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2a2218"/><stop offset="1" stop-color="#14100b"/></radialGradient>
+    <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0cf80"/><stop offset="1" stop-color="#b88a2e"/></linearGradient>
+  </defs>
+</svg>
+
+<header class="hero">
+  <svg class="hero-art" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <radialGradient id="hSun" cx="78%" cy="30%" r="70%"><stop offset="0" stop-color="#5a4219"/><stop offset=".45" stop-color="#241a0d"/><stop offset="1" stop-color="#0d0b09"/></radialGradient>
+      <radialGradient id="hPlate" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#f8efd8"/><stop offset="1" stop-color="#cdbd9a"/></radialGradient>
+    </defs>
+    <rect width="1200" height="420" fill="url(#hSun)"/>
+    <g fill="none" stroke="#d4a84b" stroke-opacity=".18" stroke-width="1.4">
+      <circle cx="930" cy="190" r="250"/><circle cx="930" cy="190" r="205"/><circle cx="930" cy="190" r="160"/>
+      <path d="M0 360 Q300 300 600 360 T1200 340"/><path d="M0 390 Q300 330 600 390 T1200 370"/>
+    </g>
+    <ellipse cx="930" cy="318" rx="180" ry="22" fill="#000" opacity=".45"/>
+    <circle cx="930" cy="200" r="150" fill="url(#hPlate)"/>
+    <circle cx="930" cy="200" r="118" fill="none" stroke="#d4a84b" stroke-width="3"/>
+    <circle cx="930" cy="200" r="100" fill="#2a2016"/>
+    <g fill="#d4a84b">
+      <circle cx="900" cy="185" r="26" fill="#c9792f"/><circle cx="950" cy="170" r="22" fill="#e0b23c"/>
+      <circle cx="945" cy="222" r="28" fill="#a85a28"/><circle cx="895" cy="230" r="18" fill="#6d9a3d"/>
+      <circle cx="925" cy="200" r="14" fill="#f0cf80"/>
+    </g>
+    <g fill="none" stroke="#f3ead7" stroke-opacity=".28" stroke-width="3" stroke-linecap="round">
+      <path d="M900 40 q-14 22 0 44 q14 22 0 44"/><path d="M940 24 q-14 22 0 44 q14 22 0 44"/><path d="M980 40 q-14 22 0 44 q14 22 0 44"/>
+    </g>
+  </svg>
+  <div class="wrap hero-in">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 100 100" role="img" aria-label="Logo">
+        <circle cx="50" cy="50" r="47" fill="#0d0b09" stroke="url(#gGold)" stroke-width="3"/>
+        <circle cx="50" cy="50" r="40" fill="none" stroke="url(#gGold)" stroke-width="1" stroke-dasharray="2 3"/>
+        <path d="M27 36 l8 9 7-14 8 14 8-14 7 14 8-9 -4 20 H31z" fill="url(#gGold)"/>
+        <rect x="31" y="58" width="38" height="4" rx="1" fill="url(#gGold)"/>
+        <text id="logoMono" x="50" y="82" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="15" letter-spacing="3" fill="#f3ead7">RT</text>
+      </svg>
+      <div style="min-width:0">
+        <div class="eyebrow">Digital menu</div>
+        <h1 id="rName"></h1>
+      </div>
+    </div>
+    <p class="tag" id="rTag"></p>
+    <div class="info">
+      <div class="chip-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="rHours"></span></div>
+      <div class="chip-info"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span id="rLoc"></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="tabs-bar"><div class="wrap"><div class="tabs" id="tabs" role="tablist" aria-label="Food categories"></div></div></div>
+
+<main class="wrap">
+  <section id="panel" role="tabpanel" aria-live="polite"></section>
+</main>
+
+<footer><div class="wrap">
+  <p id="fName"></p>
+  <p>Prices in Indian rupees. Tap Add, review your cart, then send your order on WhatsApp. No payment is taken on this page.</p>
+</div></footer>
+
+<div class="bar" id="bar" hidden>
+  <button class="bar-btn" id="barBtn" type="button"><span id="barTxt"></span><span id="barTot"></span></button>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden>
+  <div class="d-head">
+    <h2 id="dTitle">Your cart</h2>
+    <button class="icon-btn" id="dClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div id="viewCart" style="display:contents">
+    <div class="d-body" id="cartList"></div>
+    <div class="d-foot" id="cartFoot">
+      <div class="total"><span>Total</span><span id="cartTotal"></span></div>
+      <button class="btn-wa" id="toCheckout" type="button">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.2.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.5z"/></svg>
+        Order on WhatsApp
+      </button>
+      <button class="clear" id="clearCart" type="button">Clear cart</button>
+    </div>
+  </div>
+  <div id="viewCheckout" style="display:contents" hidden>
+    <div class="d-body">
+      <div class="field">
+        <label for="cName">Your name</label>
+        <input id="cName" type="text" placeholder="e.g. Rahul" autocomplete="name" maxlength="60">
+        <p class="err" id="eName"></p>
+      </div>
+      <div class="field" style="margin-top:4px">
+        <span class="lbl" id="lblType">Dining option</span>
+        <div class="seg" role="group" aria-labelledby="lblType">
+          <button type="button" id="optDine" aria-pressed="true">Table</button>
+          <button type="button" id="optTake" aria-pressed="false">Takeaway</button>
+        </div>
+      </div>
+      <div class="field" id="tableField" style="margin-top:12px">
+        <label for="cTable">Table number</label>
+        <input id="cTable" type="text" inputmode="numeric" placeholder="e.g. 05" maxlength="6">
+        <p class="err" id="eTable"></p>
+      </div>
+      <div class="sum" id="sum"></div>
+      <div class="field"><span class="lbl">Message that will open in WhatsApp</span></div>
+      <pre class="prev" id="prev"></pre>
+      <div class="warn" id="demoWarn" hidden></div>
+    </div>
+    <div class="d-foot">
+      <a class="btn-wa" id="waLink" href="#" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.2.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.5z"/></svg>
+        Open WhatsApp
+      </a>
+      <p class="note">WhatsApp opens with your order typed in. Press send there to place it. The restaurant will reply to confirm.</p>
+      <button class="btn-ghost" id="backCart" type="button">Back to cart</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+/* ============================================================
+   EDIT THIS BLOCK TO REUSE THE SITE FOR ANOTHER RESTAURANT
+   ============================================================ */
+const CONFIG = {
+  name: "The Royal Taste",                       // shown in the header
+  fullName: "The Royal Taste Restaurant",        // used in the WhatsApp greeting
+  monogram: "RT",                                // letters under the crown in the logo
+  tagline: "Fresh Food, Great Taste",
+  hours: "Open daily · 11:00 AM – 11:00 PM",
+  location: "12 Palace Road, Pune (demo address)",
+  // Country code + number, digits only, no + or spaces. Example: "919876543210"
+  whatsapp: "918446348928",
+  currency: "₹"
+};
+
+/* Each category has items. Per item:
+   name, price (number), desc, veg (true/false), emoji (used by the built-in illustration),
+   image (optional): a URL or data: URI. Leave "" to use the built-in illustration.
+   Note: external image URLs only show when the page is hosted somewhere that allows them. */
+const MENU = [
+  { id: "starters", name: "Starters", blurb: "Crisp, spicy and made for sharing.", items: [
+    { name: "Veg Manchurian",     price: 120, veg: true, emoji: "🥟", image: "", desc: "Crisp vegetable dumplings tossed in a tangy Indo-Chinese garlic sauce." },
+    { name: "Crispy Corn",        price: 110, veg: true, emoji: "🌽", image: "", desc: "Golden fried sweet corn with peppers, spring onion and chaat masala." },
+    { name: "Paneer Tikka",       price: 180, veg: true, emoji: "🍢", image: "", desc: "Tandoor-grilled paneer cubes marinated in yoghurt and smoky spices." },
+    { name: "French Fries",       price: 90,  veg: true, emoji: "🍟", image: "", desc: "Thin cut, salted and fried until crisp, served with ketchup." }
+  ]},
+  { id: "main-course", name: "Main Course", blurb: "Slow-cooked gravies, rice and fresh breads.", items: [
+    { name: "Paneer Butter Masala", price: 220, veg: true, emoji: "🍛", image: "", desc: "Soft paneer in a rich, creamy tomato and butter gravy." },
+    { name: "Veg Kolhapuri",        price: 190, veg: true, emoji: "🥘", image: "", desc: "Mixed vegetables in a fiery Kolhapuri masala. Spicy." },
+    { name: "Dal Tadka",            price: 150, veg: true, emoji: "🍲", image: "", desc: "Yellow lentils finished with a ghee tempering of cumin and garlic." },
+    { name: "Veg Biryani",          price: 180, veg: true, emoji: "🍚", image: "", desc: "Fragrant basmati layered with vegetables and whole spices, served with raita." },
+    { name: "Butter Roti",          price: 20,  veg: true, emoji: "🫓", image: "", desc: "Fresh tandoori roti brushed with butter." }
+  ]},
+  { id: "drinks", name: "Drinks", blurb: "Cold, fresh and a hot cup of chai.", items: [
+    { name: "Cold Coffee",     price: 90,  veg: true, emoji: "🧋", image: "", desc: "Chilled blended coffee with milk and a scoop of cream." },
+    { name: "Fresh Lime Soda", price: 60,  veg: true, emoji: "🍋", image: "", desc: "Fresh lime with soda, sweet, salted or mixed." },
+    { name: "Mango Milkshake", price: 100, veg: true, emoji: "🥭", image: "", desc: "Thick shake made with ripe mango pulp and cold milk." },
+    { name: "Masala Chai",     price: 30,  veg: true, emoji: "☕", image: "", desc: "Strong tea simmered with ginger, cardamom and milk." }
+  ]},
+  { id: "desserts", name: "Desserts", blurb: "A sweet finish.", items: [
+    { name: "Chocolate Brownie", price: 100, veg: true, emoji: "🍫", image: "", desc: "Warm, fudgy chocolate brownie with a dusting of cocoa." },
+    { name: "Gulab Jamun",       price: 60,  veg: true, emoji: "🍮", image: "", desc: "Two soft milk dumplings soaked in rose and cardamom syrup." },
+    { name: "Vanilla Ice Cream", price: 70,  veg: true, emoji: "🍨", image: "", desc: "Two scoops of classic vanilla ice cream." }
+  ]}
+];
+/* ============================ end of config ============================ */
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
+  var money = function (n) { return CONFIG.currency + Number(n).toLocaleString("en-IN"); };
+  var slug = function (s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); };
+
+  /* index items by id */
+  var BY_ID = {};
+  MENU.forEach(function (c) { c.items.forEach(function (it) { it.id = slug(it.name); BY_ID[it.id] = it; }); });
+
+  /* header text */
+  document.title = CONFIG.name;
+  $("rName").textContent = CONFIG.name;
+  $("rTag").textContent = CONFIG.tagline;
+  $("rHours").textContent = CONFIG.hours;
+  $("rLoc").textContent = CONFIG.location;
+  $("fName").textContent = CONFIG.fullName;
+  $("logoMono").textContent = CONFIG.monogram || "";
+
+  /* cart state */
+  var KEY = "menu-cart-" + slug(CONFIG.name);
+  var cart = {};
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+    Object.keys(saved).forEach(function (k) { if (BY_ID[k] && saved[k] > 0) cart[k] = Math.min(99, saved[k] | 0); });
+  } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch (e) {} }
+  function count() { return Object.keys(cart).reduce(function (a, k) { return a + cart[k]; }, 0); }
+  function total() { return Object.keys(cart).reduce(function (a, k) { return a + cart[k] * BY_ID[k].price; }, 0); }
+  function setQty(id, q) {
+    if (q <= 0) delete cart[id]; else cart[id] = Math.min(99, q);
+    persist(); renderAll();
+  }
+
+  /* illustration for items without a photo */
+  var HUES = { "starters": ["#3b2410", "#7a4a1a"], "main-course": ["#3a1a12", "#82361f"], "drinks": ["#142a2a", "#2d6a5d"], "desserts": ["#33152a", "#7d2e59"] };
+  function art(it, cat) {
+    var h = HUES[cat.id] || ["#2a2114", "#6b5120"];
+    return '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="' + esc(it.name) + '">' +
+      '<defs><radialGradient id="bg-' + it.id + '" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="' + h[1] + '"/><stop offset="1" stop-color="' + h[0] + '"/></radialGradient></defs>' +
+      '<rect width="400" height="300" fill="url(#bg-' + it.id + ')"/>' +
+      '<g fill="none" stroke="#d4a84b" stroke-opacity=".18"><circle cx="200" cy="150" r="140"/><circle cx="200" cy="150" r="170"/></g>' +
+      '<ellipse cx="200" cy="244" rx="118" ry="14" fill="#000" opacity=".4"/>' +
+      '<circle cx="200" cy="140" r="106" fill="url(#gPlate)"/>' +
+      '<circle cx="200" cy="140" r="84" fill="none" stroke="url(#gGold)" stroke-width="2.5"/>' +
+      '<circle cx="200" cy="140" r="74" fill="url(#gWell)"/>' +
+      '<text x="200" y="142" text-anchor="middle" dominant-baseline="central" font-size="84">' + esc(it.emoji || "🍽") + '</text></svg>';
+  }
+
+  /* tabs + panel */
+  var current = MENU[0].id;
+  function renderTabs() {
+    $("tabs").innerHTML = MENU.map(function (c) {
+      return '<button class="tab" role="tab" type="button" data-cat="' + c.id + '" aria-selected="' + (c.id === current) + '">' + esc(c.name) + '<small>' + c.items.length + '</small></button>';
+    }).join("");
+  }
+  function cardHtml(it, cat) {
+    var q = cart[it.id] || 0;
+    var pic = it.image ? '<img src="' + esc(it.image) + '" alt="' + esc(it.name) + '" loading="lazy" data-fallback="' + it.id + '">' : art(it, cat);
+    var action = q > 0
+      ? '<div class="step" role="group" aria-label="Quantity of ' + esc(it.name) + '"><button type="button" data-dec="' + it.id + '" aria-label="Decrease">−</button><output>' + q + '</output><button type="button" data-inc="' + it.id + '" aria-label="Increase">+</button></div>'
+      : '<button class="btn-add" type="button" data-add="' + it.id + '">Add to Cart</button>';
+    return '<article class="card"><div class="pic">' + pic +
+      '<span class="vmark' + (it.veg ? '' : ' nv') + '" role="img" aria-label="' + (it.veg ? 'Vegetarian' : 'Non-vegetarian') + '"></span></div>' +
+      '<div class="body"><h3>' + esc(it.name) + '</h3><p class="desc">' + esc(it.desc) + '</p>' +
+      '<div class="foot"><span class="price">' + money(it.price) + '</span>' + action + '</div></div></article>';
+  }
+  function renderPanel() {
+    var cat = MENU.filter(function (c) { return c.id === current; })[0] || MENU[0];
+    $("panel").innerHTML = '<div class="cat-head"><h2>' + esc(cat.name) + '</h2><p>' + esc(cat.blurb || "") + '</p><div class="rule"></div></div>' +
+      '<div class="grid">' + cat.items.map(function (it) { return cardHtml(it, cat); }).join("") + '</div>';
+    var imgs = $("panel").querySelectorAll("img[data-fallback]");
+    Array.prototype.forEach.call(imgs, function (img) {
+      img.addEventListener("error", function () {
+        var it = BY_ID[img.getAttribute("data-fallback")];
+        img.outerHTML = art(it, cat);
+      });
+    });
+  }
+  function selectCat(id, push) {
+    if (!MENU.some(function (c) { return c.id === id; })) return;
+    current = id;
+    renderTabs(); renderPanel();
+    if (push) { try { history.replaceState(null, "", "#" + id); } catch (e) { location.hash = id; } }
+    var t = document.querySelector('.tab[aria-selected="true"]');
+    if (t && t.scrollIntoView) t.scrollIntoView({ inline: "center", block: "nearest" });
+  }
+  $("tabs").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cat]"); if (!b) return;
+    selectCat(b.getAttribute("data-cat"), true);
+    var top = document.querySelector(".tabs-bar").offsetTop;
+    if (window.scrollY > top) window.scrollTo({ top: top, behavior: "smooth" });
+  });
+  window.addEventListener("hashchange", function () { selectCat(location.hash.slice(1), false); });
+  $("panel").addEventListener("click", function (e) {
+    var a = e.target.closest("[data-add],[data-inc],[data-dec]"); if (!a) return;
+    var id = a.getAttribute("data-add") || a.getAttribute("data-inc") || a.getAttribute("data-dec");
+    var q = cart[id] || 0;
+    if (a.hasAttribute("data-dec")) setQty(id, q - 1); else setQty(id, q + 1);
+    var again = document.querySelector('[data-add="' + id + '"],[data-inc="' + id + '"]');
+    if (again) again.focus();
+  });
+
+  /* cart bar + drawer */
+  function renderBar() {
+    var n = count();
+    $("bar").hidden = n === 0 || !$("drawer").hidden;
+    $("barTxt").textContent = "View cart · " + n + (n === 1 ? " item" : " items");
+    $("barTot").textContent = money(total());
+  }
+  function renderCart() {
+    var ids = Object.keys(cart);
+    if (!ids.length) {
+      $("cartList").innerHTML = '<div class="empty"><b>Your cart is empty</b>Add a dish from the menu to start your order.</div>';
+      $("cartFoot").hidden = true; return;
+    }
+    $("cartFoot").hidden = false;
+    $("cartList").innerHTML = ids.map(function (id) {
+      var it = BY_ID[id], q = cart[id];
+      return '<div class="line"><div><div class="nm">' + esc(it.name) + '</div><div class="each">' + money(it.price) + ' each</div></div>' +
+        '<div class="sub">' + money(it.price * q) + '</div>' +
+        '<div class="ctl"><div class="step" role="group" aria-label="Quantity of ' + esc(it.name) + '"><button type="button" data-cdec="' + id + '" aria-label="Decrease">−</button><output>' + q + '</output><button type="button" data-cinc="' + id + '" aria-label="Increase">+</button></div>' +
+        '<button class="rm" type="button" data-crm="' + id + '">Remove</button></div></div>';
+    }).join("");
+    $("cartTotal").textContent = money(total());
+  }
+  $("cartList").addEventListener("click", function (e) {
+    var a = e.target.closest("[data-cdec],[data-cinc],[data-crm]"); if (!a) return;
+    var id = a.getAttribute("data-cdec") || a.getAttribute("data-cinc") || a.getAttribute("data-crm");
+    var q = cart[id] || 0;
+    if (a.hasAttribute("data-crm")) setQty(id, 0);
+    else if (a.hasAttribute("data-cdec")) setQty(id, q - 1);
+    else setQty(id, q + 1);
+  });
+  function renderAll() {
+    renderPanel(); renderBar(); renderCart();
+    if (!$("viewCheckout").hidden) { if (!count()) showCart(); else renderCheckout(); }
+  }
+
+  var lastFocus = null;
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    $("drawer").hidden = false; $("scrim").hidden = false;
+    document.body.style.overflow = "hidden";
+    showCart(); renderBar();
+    $("dClose").focus();
+  }
+  function closeDrawer() {
+    $("drawer").hidden = true; $("scrim").hidden = true;
+    document.body.style.overflow = "";
+    renderBar();
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function showCart() { $("viewCheckout").hidden = true; $("viewCart").hidden = false; $("viewCart").style.display = "contents"; $("viewCheckout").style.display = "none"; $("dTitle").textContent = "Your cart"; renderCart(); }
+  function showCheckout() { $("viewCart").hidden = true; $("viewCart").style.display = "none"; $("viewCheckout").hidden = false; $("viewCheckout").style.display = "contents"; $("dTitle").textContent = "Place your order"; renderCheckout(); $("cName").focus(); }
+  $("barBtn").addEventListener("click", openDrawer);
+  $("dClose").addEventListener("click", closeDrawer);
+  $("scrim").addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("drawer").hidden) closeDrawer(); });
+  $("clearCart").addEventListener("click", function () { cart = {}; persist(); renderAll(); });
+  $("toCheckout").addEventListener("click", showCheckout);
+  $("backCart").addEventListener("click", showCart);
+
+  /* checkout */
+  var mode = "dine";
+  function setMode(m) {
+    mode = m;
+    $("optDine").setAttribute("aria-pressed", m === "dine");
+    $("optTake").setAttribute("aria-pressed", m === "take");
+    $("tableField").hidden = m !== "dine";
+    renderCheckout();
+  }
+  $("optDine").addEventListener("click", function () { setMode("dine"); });
+  $("optTake").addEventListener("click", function () { setMode("take"); });
+  $("cName").addEventListener("input", renderCheckout);
+  $("cTable").addEventListener("input", renderCheckout);
+
+  function buildMessage() {
+    var name = $("cName").value.trim() || "(your name)";
+    var table = $("cTable").value.trim() || "(table number)";
+    var lines = ["Hello " + CONFIG.fullName + "!", "", "I want to place an order.", "", "Customer Name: " + name];
+    lines.push(mode === "dine" ? "Table Number: " + table : "Order Type: Takeaway");
+    lines.push("", "Order:", "");
+    Object.keys(cart).forEach(function (id) {
+      var it = BY_ID[id], q = cart[id];
+      lines.push("- " + it.name + " × " + q + " – " + money(it.price * q));
+    });
+    lines.push("", "Total: " + money(total()), "", "Please confirm my order.");
+    return lines.join("\n");
+  }
+  function waUrl(msg) {
+    var num = String(CONFIG.whatsapp).replace(/\D/g, "");
+    return "https://wa.me/" + num + "?text=" + encodeURIComponent(msg);
+  }
+  function renderCheckout() {
+    var rows = Object.keys(cart).map(function (id) {
+      var it = BY_ID[id], q = cart[id];
+      return '<div class="r"><span>' + esc(it.name) + ' × ' + q + '</span><span>' + money(it.price * q) + '</span></div>';
+    }).join("");
+    $("sum").innerHTML = rows + '<div class="r"><span>Total</span><span>' + money(total()) + '</span></div>';
+    var msg = buildMessage();
+    $("prev").textContent = msg;
+    $("waLink").href = waUrl(msg);
+    var digits = String(CONFIG.whatsapp).replace(/\D/g, "");
+    var w = $("demoWarn");
+    if (digits.length < 8) {
+      w.hidden = false;
+      w.textContent = "Demo mode: the restaurant WhatsApp number is not set yet. Edit CONFIG.whatsapp in the page code. WhatsApp will ask you to pick a contact instead.";
+    } else w.hidden = true;
+  }
+  $("waLink").addEventListener("click", function (e) {
+    var ok = true;
+    if (!$("cName").value.trim()) { $("eName").textContent = "Please enter your name."; ok = false; } else $("eName").textContent = "";
+    if (mode === "dine" && !$("cTable").value.trim()) { $("eTable").textContent = "Please enter your table number."; ok = false; } else $("eTable").textContent = "";
+    if (!count()) ok = false;
+    if (!ok) { e.preventDefault(); (!$("cName").value.trim() ? $("cName") : $("cTable")).focus(); }
+  });
+
+  /* boot */
+  var start = location.hash.slice(1);
+  if (MENU.some(function (c) { return c.id === start; })) current = start;
+  renderTabs(); renderAll();
+})();
+</script>
+
+</body></html>
